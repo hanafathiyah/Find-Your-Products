@@ -1,5 +1,5 @@
 # id, name, buying price, quantity, selling price, profit"
-from operator import itemgetter
+from operator import itemgetter, mod
 
 
 array_of_product = []
@@ -7,6 +7,10 @@ array_of_product = []
 print("Welcome to Find Your Products App")
 print("You can input your products below and we'll give you some recommendations")
 print("")
+
+modal = int(input("Input your capital: "))
+print("")
+
 user_input = input("Do you want to continue? (Y/N): ")
 
 while (user_input == 'Y'):
@@ -26,8 +30,6 @@ while (user_input == 'Y'):
 
 print("")
 
-modal = int(input("Input your capital: "))
-print("")
 
 knapsack = []
 for i in array_of_product:
@@ -42,21 +44,33 @@ greedy_by_profit = []
 greedy_by_weight = []
 greedy_by_density = []
 
-expenditure_by_profit = 0
-expenditure_by_weight = 0
-expenditure_by_density = 0
-
-income_by_profit = 0
-income_by_weight = 0
-income_by_density = 0
-
 # greedy by profit
-
+loop = 0
+total = 0
+while (loop < len(knapsack_sorted_by_profit)):
+    if(total + knapsack_sorted_by_profit[loop][1] <= modal):
+        greedy_by_profit.append(knapsack_sorted_by_profit[loop])
+        total += knapsack_sorted_by_profit[loop][1]
+    loop += 1
 
 # greedy by weight
+loop = 0
+total = 0
+while (loop < len(knapsack_sorted_by_weight)):
+    if(total + knapsack_sorted_by_weight[loop][1] <= modal):
+        greedy_by_weight.append(knapsack_sorted_by_weight[loop])
+        total += knapsack_sorted_by_weight[loop][1]
+    loop += 1
 
 # greedy by density
+loop = 0
+total = 0
+while (loop < len(knapsack_sorted_by_density)):
+    if(total + knapsack_sorted_by_density[loop][1] <= modal):
+        greedy_by_density.append(knapsack_sorted_by_density[loop])
+        total += knapsack_sorted_by_density[loop][1]
+    loop += 1
 
-print(knapsack_sorted_by_weight)
-print(knapsack_sorted_by_profit)
-print(knapsack_sorted_by_density)
+print(greedy_by_profit)
+print(greedy_by_weight)
+print(greedy_by_density)
