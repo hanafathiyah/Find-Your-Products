@@ -1,26 +1,37 @@
 from operator import itemgetter
+import os
 
 
 def printresult(arrayofresult):
     display = []
     cnt = 0
     if(len(arrayofresult) >= 0):
-        display.append([1, arrayofresult[0][0]])
+        display.append(
+            [1, arrayofresult[0][0], arrayofresult[0][1], arrayofresult[0][2]])
         for i in range(1, len(arrayofresult)):
             if(arrayofresult[i] == arrayofresult[i-1]):
                 display[len(display)-1][0] += 1
             else:
-                display.append([1, arrayofresult[i][0], arrayofresult[i][1]])
+                display.append(
+                    [1, arrayofresult[i][0], arrayofresult[i][1], arrayofresult[i][2]])
     else:
         print("There's no product you can sell")
 
-    print("Result:")
+    print("Result (format: Qty - product's name - buying price - selling price)")
     for i in display:
-        print(str(i[0])+"x"+" "+str(i[1])+" " +
-              str('{:,}'.format(i[2]).replace(",", ".")))
+        print(str(i[0])+"x"+" - "+str(i[1])+" - " +
+              str('Rp{:,}'.format(i[2]).replace(",", "."))+" - " + str('Rp{:,}'.format(i[2]+i[3]).replace(",", ".")))
+
+
+def sum_of_profit(arrayofresult):
+    sum = 0
+    for i in range(len(arrayofresult)):
+        sum += arrayofresult[i][2]
+    return sum
 
 
 # Inisialisasi Array Kosong
+os.system("cls")
 array_of_product = []
 greedy_by_profit = []
 greedy_by_weight = []
@@ -103,4 +114,20 @@ while (loop < len(knapsack_sorted_by_density)):
         total += knapsack_sorted_by_density[loop][1]
     loop += 1
 
+print("1. Greedy By Profit")
 printresult(greedy_by_profit)
+print("Total profit =", str('Rp{:,}'.format(
+    sum_of_profit(greedy_by_profit)).replace(",", ".")))
+print("")
+
+print("2. Greedy By Weight")
+printresult(greedy_by_weight)
+print("Total profit =", str('Rp{:,}'.format(
+    sum_of_profit(greedy_by_weight)).replace(",", ".")))
+print("")
+
+print("3. Greedy By Density")
+printresult(greedy_by_density)
+print("Total profit =", str('Rp{:,}'.format(
+    sum_of_profit(greedy_by_density)).replace(",", ".")))
+print("")
